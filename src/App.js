@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import Navbar from './components/Navbar'
+
 const url="http://localhost:8080/producto/";
-//const ahora = Date.now();
-//var ahora = new Date().getTime();
 const head = {
   method: "post",
   url: url,
   //headers: {
   //'Content-Type': 'application/json',
   //'Access-Control-Allow-Origin': '*',
-  ////'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
   //},
-  //params:{id:"192,203,231"},
   params:{},
-  //data:{id:[190,200,199]}
   data:{}
-  //data:[{'name': 'new_'+ahora, "size": 700, "id_tipo": 71}, {'name': '_new'+ahora, "size": 500, "id_tipo": 72}]
-  //data:[{'name': 'new_'+ahora, "id": 283}, {'name': '_new'+ahora, "id": 284}]
 }
 
 class App extends Component {
@@ -40,7 +34,8 @@ class App extends Component {
   }
 
   peticionGet=()=>{
-    //axios.get(url, head)
+    //head.params = {id:"192,203,231"} // or
+    //head.data = {id:[190,200,199]}
     head.method = "get"
     axios(head)
     .then(response=>{
@@ -61,6 +56,7 @@ class App extends Component {
   }
 
   peticionDelete=()=>{
+    //head.data = {id:[190,200,199]}
     head.method = "delete"
     head.data = {id:[this.state.form.id]}
     axios(head).then(response=>{
@@ -81,6 +77,7 @@ class App extends Component {
   }
 
   peticionPatch=()=>{
+    //head.data = [{'name': 'new_'+ahora, "id": 283}, {'name': '_new'+ahora, "id": 284}]
     head.method = "patch"
     head.data = [this.state.form]
     //console.log(this.state.form)
@@ -102,11 +99,13 @@ class App extends Component {
   }
 
   peticionPost=async()=>{
-   delete this.state.form.id;
-   head.method = "post"
-   head.data = [this.state.form]
-   console.log([this.state.form])
-   await axios(head).then(response=>{
+    //const ahora = Date.now();
+    //head.data = [{'name': 'new_'+ahora, "size": 700, "id_tipo": 71}, {'name': '_new'+ahora, "size": 500, "id_tipo": 72}]
+    delete this.state.form.id;
+    head.method = "post"
+    head.data = [this.state.form]
+    console.log([this.state.form])
+    await axios(head).then(response=>{
       this.modalInsertar();
       this.peticionGet();
     })
@@ -158,7 +157,7 @@ class App extends Component {
     const {form}=this.state;
   return (
     <div className="App">
-      <br /><br /><br />
+      <Navbar/>
       <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Producto</button>
       <br /><br />
       <table className="table">
@@ -215,7 +214,7 @@ class App extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-              {this.state.tipoModal=='insertar'?
+              {this.state.tipoModal==='insertar'?
                 <button className="btn btn-success" onClick={()=>this.peticionPost()}>
                 Insertar
               </button>:
