@@ -7,6 +7,10 @@ import Home from './pages/Home.js'
 import Login from './pages/Login'
 import Producto from './pages/Producto'
 import TipoProducto from './pages/TipoProducto'
+import Sucursal from './pages/Sucursal'
+import EstatusCompra from './pages/EstatusCompra'
+import Proveedor from './pages/Proveedor'
+import Compra from './pages/Compra'
 
 function App() {
   return (
@@ -24,8 +28,20 @@ function App() {
           <Route path="/producto">
             <Producto/>
           </Route>
+          <Route path="/compra">
+            <Compra/>
+          </Route>
+          <Route path="/proveedor">
+            <Proveedor/>
+          </Route>
+          <Route path="/estatus_compra">
+            <EstatusCompra/>
+          </Route>
           <Route path="/tipo_producto">
             <TipoProducto/>
+          </Route>
+          <Route path="/sucursal">
+            <Sucursal/>
           </Route>
         </Switch>
       </Router>
