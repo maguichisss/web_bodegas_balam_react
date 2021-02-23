@@ -30,6 +30,28 @@ class Producto extends Component {
       tipoModal: ''
     }
   }
+  tipos_productos = [];
+  constructor(){
+    super()
+    head.method = "get"
+    axios.get("http://localhost:8080/tipo_producto/")
+    .then(response=>{
+      this.tipos_productos = response.data.data;
+      //console.log(this.tipos_productos);
+      //this.setState({data: response.data.data});
+    })
+    .catch(error=>{
+      if (error.response){
+        console.log(error.response.data);
+        console.log(error.response);
+      }else if(error.request){
+        console.log(error.request);
+        console.log(error.message);
+      }else if(error.message){
+        console.log(error.message);
+      }
+    })
+  }
 
   peticionGet=()=>{
     //head.params = {id:"192,203,231"} // or
@@ -37,7 +59,7 @@ class Producto extends Component {
     head.method = "get"
     axios(head)
     .then(response=>{
-      console.log(response.data.data);
+      //console.log(response.data.data);
       this.setState({data: response.data.data});
     })
     .catch(error=>{
@@ -153,112 +175,99 @@ class Producto extends Component {
 
   render(){
     const {form}=this.state;
-  return (
-    <div className="App">
-      <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Nuevo Producto</button>
-      <br /><br />
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Tamaño/Mililitros</th>
-            <th>Tipo</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.data.map(product=>{
-            return(
-              <tr key={product.id}>
-              <td>{product.id}</td>
-              <td>{product.name}</td>
-              <td>{product.size}ml</td>
-              <td>{product.tipo.tipo}</td>
-              <td>
-                <button className="btn btn-primary" onClick={()=>{this.seleccionarProducto(product); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
-                {"   "}
-                <button className="btn btn-danger" onClick={()=>{this.seleccionarProducto(product); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <Modal isOpen={this.state.modalInsertar}>
-        <ModalHeader style={{display: 'block'}}>
-          <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
-        </ModalHeader>
-        <ModalBody>
-          <div className="form-group">
-            {form && form.id?
-            <>
-              <label htmlFor="id">ID</label>
-              <input className="form-control" type="text" name="id" id="id" readOnly onChange={this.handleChange} value={form.id}/>
-              <br />
-            </>
-              : null
-            }
-            <label htmlFor="name">Nombre</label>
-            <input className="form-control" type="text" name="name" id="name" onChange={this.handleChange} value={form?form.name: ''}/>
-            <br />
-            <label htmlFor="size">Tamaño/Mililitros</label>
-            <input className="form-control" type="text" name="size" id="size" onChange={this.handleChange} value={form?form.size: ''}/>
-            <br />
-            <label htmlFor="id_tipo">Tipo</label>
-            <input className="form-control" type="text" name="id_tipo" id="id_tipo" onChange={this.handleChange} value={form?form.id_tipo:''}/>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-              {this.state.tipoModal==='insertar'?
-                <button className="btn btn-success" onClick={()=>this.peticionPost()}>
-                Insertar
-              </button>:
-              <button className="btn btn-primary" onClick={()=>this.peticionPatch()}>
-                Actualizar
-              </button>
-              }
-                <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
-            </ModalFooter>
-      </Modal>
-      <Modal isOpen={this.state.modalEliminar}>
-        <ModalBody>
-            Estás seguro que deseas eliminar el producto {form && form.name}
-        </ModalBody>
-        <ModalFooter>
-          <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-          <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-        </ModalFooter>
-      </Modal>
-    </div>
-
-
-
-  );
-}
-/*
-  render (){
     return (
       <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit :( <code>src/App.js</code> and save to reload, this really work?
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
-          Learn React
-        </a>
-      </header>
+        <button className="btn btn-success"
+          onClick={()=>{
+            this.setState({form: null, tipoModal: 'insertar'});
+            this.modalInsertar()
+            }
+          }
+        >
+          Nuevo Producto
+        </button>
+        <br /><br />
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Tamaño/Mililitros</th>
+              <th>Tipo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.data.map(item=>{
+              return(
+                <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.size}ml</td>
+                <td>{item.tipo.tipo}</td>
+                <td>
+                  <button className="btn btn-primary" onClick={()=>{this.seleccionarProducto(item); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+                  &nbsp;
+                  <button className="btn btn-danger" onClick={()=>{this.seleccionarProducto(item); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+        <Modal isOpen={this.state.modalInsertar}>
+          <ModalHeader style={{display: 'block'}}>
+            <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+          </ModalHeader>
+          <ModalBody>
+            <div className="form-group">
+              {form && form.id?
+                <>
+                <label hidden htmlFor="id">ID</label>
+                <input className="form-control" hidden type="text" name="id" id="id" readOnly onChange={this.handleChange} value={form.id}/>
+                </>
+                : null
+              }
+              <label htmlFor="name">Nombre</label>
+              <input className="form-control" type="text" name="name" id="name" onChange={this.handleChange} value={form?form.name: ''}/>
+              <br />
+              <label htmlFor="size">Tamaño/Mililitros</label>
+              <input className="form-control" type="text" name="size" id="size" onChange={this.handleChange} value={form?form.size: ''}/>
+              <br />
+              <label htmlFor="id_tipo">Tipo</label>
+              <select className="form-control" name="id_tipo" id="id_tipo" onChange={this.handleChange} defaultValue={form?form.id_tipo: ''}>
+              {this.tipos_productos.map(item=>{
+                return(
+                  <option key={item.id} className="form-control" value={item.id}>{item.tipo}</option>
+                  )
+              })}
+              </select>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+                {this.state.tipoModal==='insertar'?
+                  <button className="btn btn-success" onClick={()=>this.peticionPost()}>
+                    Insertar
+                  </button>:
+                  <button className="btn btn-primary" onClick={()=>this.peticionPatch()}>
+                    Actualizar
+                  </button>
+                }
+                  <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
+              </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.modalEliminar}>
+          <ModalBody>
+              Estás seguro que deseas eliminar el producto {form && form.name}
+          </ModalBody>
+          <ModalFooter>
+            <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
+            <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
-*/
-
 }
 
 export default Producto;
