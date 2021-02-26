@@ -12,6 +12,7 @@ import EstatusCompra from './pages/EstatusCompra'
 import Proveedor from './pages/Proveedor'
 import Compra from './pages/Compra'
 import Inventario from './pages/Inventario'
+import VentaProducto from './pages/VentaProducto'
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login/>
+          </Route>
+          <Route path="/venta_producto">
+            <VentaProducto/>
           </Route>
           <Route path="/producto">
             <Producto/>

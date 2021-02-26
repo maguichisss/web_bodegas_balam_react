@@ -29,6 +29,9 @@ const NavigationBar = (props) => {
                 <NavLink href="/login/">Login</NavLink>
             </NavItem>
             <NavItem>
+                <NavLink href="/venta_producto/">Venta</NavLink>
+            </NavItem>
+            <NavItem>
                 <NavLink href="/inventario/">Inventario</NavLink>
             </NavItem>
             <NavItem>
