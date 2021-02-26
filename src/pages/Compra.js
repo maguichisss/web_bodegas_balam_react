@@ -257,12 +257,6 @@ class Compra extends Component {
 
               {this.state.tipoModal==='insertar'?
               <>
-                <label htmlFor="precio_unitario">Precio unitario</label>
-                <input className="form-control" type="text" name="precio_unitario" id="precio_unitario" onChange={this.handleChange} value={form && form.precio_unitario?form.precio_unitario: ''}/>
-                <label htmlFor="cantidad">Cantidad</label>
-                <input className="form-control" type="text" name="cantidad" id="cantidad" onChange={this.handleChange} value={form && form.cantidad?form.cantidad: ''}/>
-                <label htmlFor="fecha_pedido">Fecha pedido</label>
-                <input className="form-control" type="date" name="fecha_pedido" id="fecha_pedido" onChange={this.handleChange} value={form && form.fecha_pedido?form.fecha_pedido: ''}/>
                 <label htmlFor="id_producto">Producto</label>
                 <select className="form-control" name="id_producto" id="id_producto" onChange={this.handleChange} defaultValue={form && form.id_producto?form.id_producto: ''}>
                 {this.productos.map(item=>{
@@ -271,6 +265,12 @@ class Compra extends Component {
                     )
                   })}
                 </select>
+                <label htmlFor="cantidad">Cantidad</label>
+                <input className="form-control" type="text" name="cantidad" id="cantidad" onChange={this.handleChange} value={form && form.cantidad?form.cantidad: ''}/>
+                <label htmlFor="precio_unitario">Precio unitario</label>
+                <input className="form-control" type="text" name="precio_unitario" id="precio_unitario" onChange={this.handleChange} value={form && form.precio_unitario?form.precio_unitario: ''}/>
+                <label htmlFor="fecha_pedido">Fecha pedido</label>
+                <input className="form-control" type="date" name="fecha_pedido" id="fecha_pedido" onChange={this.handleChange} value={form && form.fecha_pedido?form.fecha_pedido: ''}/>
                 <label htmlFor="id_proveedor">Proveedor</label>
                 <select className="form-control" name="id_proveedor" id="id_proveedor" onChange={this.handleChange} defaultValue={form && form.id_proveedor?form.id_proveedor: ''}>
                 {this.proveedores.map(item=>{
@@ -279,7 +279,7 @@ class Compra extends Component {
                     )
                 })}
                 </select>
-                <label htmlFor="id_sucursal">Sucursal</label>
+                <label htmlFor="id_sucursal">Sucursal que recibe</label>
                 <select className="form-control" name="id_sucursal" id="id_sucursal" onChange={this.handleChange} defaultValue={form && form.id_sucursal?form.id_sucursal: ''}>
                 {this.sucursales.map(item=>{
                   return(
