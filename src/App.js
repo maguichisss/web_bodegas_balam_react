@@ -11,6 +11,7 @@ import Sucursal from './pages/Sucursal'
 import EstatusCompra from './pages/EstatusCompra'
 import Proveedor from './pages/Proveedor'
 import Compra from './pages/Compra'
+import Inventario from './pages/Inventario'
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/producto">
             <Producto/>
+          </Route>
+          <Route path="/inventario">
+            <Inventario/>
           </Route>
           <Route path="/compra">
             <Compra/>

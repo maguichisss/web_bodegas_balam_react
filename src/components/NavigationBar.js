@@ -29,10 +29,13 @@ const NavigationBar = (props) => {
                 <NavLink href="/login/">Login</NavLink>
             </NavItem>
             <NavItem>
+                <NavLink href="/inventario/">Inventario</NavLink>
+            </NavItem>
+            <NavItem>
                 <NavLink href="/compra/">Compras</NavLink>
             </NavItem>
             <NavItem>
-                <NavLink href="/proveedor/">Proveedor</NavLink>
+                <NavLink href="/producto/">Producto</NavLink>
             </NavItem>
             <NavItem>
                 <NavLink href="/proveedor/">Proveedor</NavLink>
